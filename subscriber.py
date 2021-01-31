@@ -1,4 +1,3 @@
-
 import sys
 import zmq
 
@@ -15,11 +14,8 @@ connect_str = "tcp://127.0.0.1:2000"
 print("Collecting stock updates...")
 socket.connect(connect_str)
 
-# Subscribe to zipcode, default is NYC, 10001
+# Subscribe to MSFT updates
 ticker_filter = "MSFT"
-
-# any subscriber must use the SUBSCRIBE to set a subscription, i.e., tell the
-# system what it is interested in
 socket.setsockopt_string(zmq.SUBSCRIBE, ticker_filter)
 
 # Process 10 updates
@@ -28,7 +24,7 @@ for update_nbr in range(10):
     string = socket.recv_string()
     ticker, price = string.split()
     total_price += int(price)
-    print(ticker + price)
+    print(ticker + " " + price)
 
 print("Average price for stock '%s' was %d" % (
       ticker_filter, total_price / (update_nbr+1))
