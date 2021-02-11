@@ -18,10 +18,10 @@ class subscriber(Thread):
 		if self.flood == True:
 			for i in range(1,6):
 				port = str(5558 + i)
-				sub.connect("tcp://127.0.0.1:" + port)
+				sub.connect("tcp://*:" + port)
 				sub.setsockopt_string(zmq.SUBSCRIBE, self.topic)
 		else:
-			sub.connect("tcp://127.0.0.1:5559")
+			sub.connect("tcp://*:5559")
 		self.joined = True
 		while self.joined:
 			string = sub.recv()
@@ -44,9 +44,9 @@ class publisher(Thread):
 		context = zmq.Context()
 		pub = context.socket(zmq.PUB)
 		if self.flood == True:
-			pub.bind("tcp://127.0.0.1:" + str(5558 + self.id))
+			pub.bind("tcp://*:" + str(5558 + self.id))
 		else:
-			pub.connect("tcp://127.0.0.1:5560")
+			pub.connect("tcp://*:5560")
 		self.joined = True
 		while self.joined:
 			#select a stock
