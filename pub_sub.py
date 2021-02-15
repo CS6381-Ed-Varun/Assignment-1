@@ -10,6 +10,7 @@ class subscriber(Thread):
 		super().__init__()
 		self.topic = topic
 		self.flood = flood
+		self.joined = True
 
 	def run(self):
 		print('starting sub ' + self.topic)
@@ -18,11 +19,11 @@ class subscriber(Thread):
 		if self.flood == True:
 			for i in range(1,6):
 				port = str(5558 + i)
-				sub.connect("tcp://*:" + port)
+				sub.connect("tcp://127.0.0.1:" + port)
 				sub.setsockopt_string(zmq.SUBSCRIBE, self.topic)
 		else:
-			sub.connect("tcp://*:5559")
-		self.joined = True
+			sub.connect("tcp://127.0.0.1:5559")
+			sub.setsockopt_string(zmq.SUBSCRIBE, self.topic)
 		while self.joined:
 			string = sub.recv()
 			topic, messagedata = string.split()
@@ -38,16 +39,16 @@ class publisher(Thread):
 		super().__init__()
 		self.id = id
 		self.flood = flood
+		self.joined = True
 
 	def run(self):
 		print('starting publisher number ' + str(self.id))
 		context = zmq.Context()
 		pub = context.socket(zmq.PUB)
 		if self.flood == True:
-			pub.bind("tcp://*:" + str(5558 + self.id))
+			pub.bind("tcp://127.0.0.1:" + str(5558 + self.id))
 		else:
-			pub.connect("tcp://*:5560")
-		self.joined = True
+			pub.connect("tcp://127.0.0.1:5560")
 		while self.joined:
 			#select a stock
 			stock_list = ["GOOG", "AAPL", "MSFT", "IBM", "AMD", "CLII", "EXO", "NFLX", "CME", "CKA"]
@@ -63,6 +64,38 @@ class publisher(Thread):
 		self.joined = False
 		print('pub leaving')
 
+class listener(Thread):
+	
+	#init self
+	def __init__(self, flood):
+		super().__init__()
+		self.flood = flood
+		self.joined = True
+
+	#start up the thread
+	def run(self):
+		print("starting listener thread")
+		context = zmq.Context()
+		sub = context.socket(zmq.SUB)
+		#Flooding version - connect to all pub networks w/o a filter
+		if self.flood == True: 
+			for i in range(1,8):
+				port = str(5558 + i)
+				sub.connect("tcp://127.0.0.1:" + port)
+				sub.setsockopt_string(zmq.SUBSCRIBE, "")
+		#Broker version - connect w/o filtering
+		else:
+			sub.connect("tcp://127.0.0.1:5559")
+			sub.setsockopt_string(zmq.SUBSCRIBE, "")
+		#make a list of messages and appended to it each time one arrives
+		messages = []
+		while self.joined:
+			string = sub.recv()
+			messages.append(messages)
+			if (len(messages) % 10 == 0):
+				print(str(len(messages)) + " messages sent by brokers")
+			
+#initializing the individual pubs, sub, and listener
 def main():
 
 	s1 = subscriber('MSFT', True)
@@ -82,6 +115,11 @@ def main():
 
 	p3 = publisher(3, True)
 	p3.start()
+
+	l1 = listener(True)
+	l1.start()
+
+	p3.leave()
 
 if __name__ == "__main__":
     main()
