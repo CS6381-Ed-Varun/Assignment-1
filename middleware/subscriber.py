@@ -1,6 +1,8 @@
 import sys
 import zmq
 from threading import Thread
+import datetime
+import os
 import random
 import time
 
@@ -25,10 +27,25 @@ class subscriber(Thread):
 			sub.connect("tcp://127.0.0.1:5559")
 			sub.setsockopt_string(zmq.SUBSCRIBE, self.topic)
 		while self.joined:
-			string = sub.recv()
-			topic, messagedata = string.split()
-			print (topic, messagedata)
+			string = sub.recv_string()
+			ticker, price, time = string.split()
+
+			time_received = (datetime.datetime.now() - datetime.datetime(1970, 1, 1)).total_seconds()
+			latency = time_received - float(time)
+			print(ticker, price, latency)
 
 	def leave(self):
 		self.joined = False
 		print('sub ' + self.topic + ' leaving')
+
+def main():
+	ticker = sys.argv[0]
+	method = sys.argv[1]
+
+	sub = subscriber(ticker, method)
+	while True:
+		sub.run()
+		time.sleep(1)
+
+if __name__=='__main__':
+	main()

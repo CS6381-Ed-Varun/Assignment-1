@@ -3,9 +3,10 @@ import zmq
 from threading import Thread
 import random
 import time
-import publisher
-import subscriber
-import listener
+from middleware import publisher
+from middleware import subscriber
+from middleware import listener
+from middleware import broker
 
 #initializing the individual pubs, sub, and listener
 def main():

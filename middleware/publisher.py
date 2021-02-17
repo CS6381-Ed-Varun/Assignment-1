@@ -1,3 +1,11 @@
+import sys
+import zmq
+from threading import Thread
+import random
+import datetime
+import os
+import time
+
 class publisher(Thread):
 
 	def __init__(self, id, flood):
@@ -22,9 +30,25 @@ class publisher(Thread):
 			#generate a random price
 			price = str(random.randrange(20, 60))
 			#send ticker + price to broker
-			pub.send_string("%s %s" % (ticker, price))
+
+			seconds = (datetime.datetime.now() - datetime.datetime(1970, 1, 1)).total_seconds()
+			time = seconds
+			pub.send_string("%s %s {ticker}, {price}, {time}").format(ticker=self.ticker, price=price, time=time)
 			time.sleep(1)
 
 	def leave(self):
 		self.joined = False
 		print('pub leaving')
+
+
+def main():
+	ticker = sys.argv[0]
+	method = sys.argv[1]
+
+	pub = publisher(ticker, method)
+	while True:
+		pub.run()
+		time.sleep(1)
+
+if __name__=='__main__':
+	main()
