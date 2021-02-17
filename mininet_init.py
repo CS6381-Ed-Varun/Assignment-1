@@ -18,7 +18,7 @@ class SingleSwitchTopo(Topo):
 			host = self.addHost('h%s'%(h+1))
 		self.addLink(host, switch)
 
-	def simpleTest(self)
+	def simpleTest(self):
 	#"Create and test a simple network"
 		topo = SingleSwitchTopo(n=4)
 		net = Mininet(topo)
