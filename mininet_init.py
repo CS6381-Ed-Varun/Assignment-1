@@ -15,17 +15,17 @@ class SingleSwitchTopo(Topo):
 
 		# Python's range(N) generates 0...N-1
 		for h in range(n):
-		host = self.addHost('h%s'%(h+1))
+			host = self.addHost('h%s'%(h+1))
 		self.addLink(host, switch)
 
-	def simpleTest()
+	def simpleTest(self)
 	#"Create and test a simple network"
 		topo = SingleSwitchTopo(n=4)
 		net = Mininet(topo)
 		net.start()
-		print "Dumping host connections"
+		print("Dumping host connections")
 		dumpNodeConnections(net.hosts)
-		print "Testing network connectivity"
+		print("Testing network connectivity")
 		net.pingAll()
 		net.stop()
 
