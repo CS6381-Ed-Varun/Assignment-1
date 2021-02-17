@@ -33,7 +33,7 @@ class publisher(Thread):
 
 			seconds = (datetime.datetime.now() - datetime.datetime(1970, 1, 1)).total_seconds()
 			time = seconds
-			pub.send_string("%s %s {ticker}, {price}, {time}").format(ticker=self.ticker, price=price, time=time)
+			pub.send_string("%s %s {ticker}, {price}, {time}").format(ticker=ticker, price=price, time=time)
 			time.sleep(1)
 
 	def leave(self):
