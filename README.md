@@ -1,4 +1,4 @@
-#CS6381 Programming Assignment #1
+# CS6381 Programming Assignment #1
 
 ## Overview
 In this assignment we will build upon the PUB/SUB model supported by the ZeroMQ (ZMQ) middleware. 
