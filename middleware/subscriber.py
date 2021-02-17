@@ -33,6 +33,8 @@ class subscriber(Thread):
 			time_received = (datetime.datetime.now() - datetime.datetime(1970, 1, 1)).total_seconds()
 			latency = time_received - float(time)
 			print(ticker, price, latency)
+			with open("latency_{}.txt".format(ticker), "a") as f:
+				f.write(str(latency) + "\n")
 
 	def leave(self):
 		self.joined = False
