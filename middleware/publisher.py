@@ -8,9 +8,10 @@ import time
 
 class publisher(Thread):
 
-	def __init__(self, id, flood):
+	def __init__(self, id, ticker, flood):
 		super().__init__()
 		self.id = id
+		self.ticker = ticker
 		self.flood = flood
 		self.joined = True
 
@@ -31,10 +32,11 @@ class publisher(Thread):
 			price = str(random.randrange(20, 60))
 			#send ticker + price to broker
 
+			#Capturing system time
 			seconds = (datetime.datetime.now() - datetime.datetime(1970, 1, 1)).total_seconds()
 			time = seconds
-			pub.send_string("%s %s {ticker}, {price}, {time}").format(ticker=ticker, price=price, time=time)
-			time.sleep(1)
+			pub.send_string("%s %s %s" % (ticker, price, time))
+			#time.sleep(1)
 
 	def leave(self):
 		self.joined = False

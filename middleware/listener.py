@@ -32,5 +32,5 @@ class listener(Thread):
         while self.joined:
             string = sub.recv()
             messages.append(messages)
-            if (len(messages) % 10 == 0):
+            if (len(messages) % 100 == 0):
                 print(str(len(messages)) + " messages sent by brokers")

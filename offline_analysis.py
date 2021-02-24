@@ -9,7 +9,7 @@ example_path = Path(__file__).parent
 #result_filenames = list(exmaple_pth.glob(
 #    'results/2017-12-31_17-46-32/*#*.csv'))
 
-result_filenames = list(example_path.glob('results/result#001.csv'))
+result_filenames = list(example_path.glob('results/result.csv'))
 
 stock_names = [f.stem for f in result_filenames]
 df = pd.concat(
