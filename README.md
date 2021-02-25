@@ -54,7 +54,6 @@ mininet> h2 python3 ./middleware/subscriber.py MSFT True &
 mininet> h3 python3 ./middleware/listener.py True &
 mininet> h4 python3 ./middleware/publisher.py 1 MSFT TRUE &
 ```
-``
 
 ## Rubric
 | Category | Points | Explanation |
