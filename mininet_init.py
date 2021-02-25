@@ -4,6 +4,7 @@ from mininet.topo import Topo
 from mininet.net import Mininet
 from mininet.util import dumpNodeConnections
 from mininet.log import setLogLevel
+from mininet.cli import CLI
 
 class SingleSwitchTopo(Topo):
 	# "Single switch connected to n hosts."
@@ -18,7 +19,7 @@ class SingleSwitchTopo(Topo):
 			host = self.addHost('h%s'%(h+1))
 		self.addLink(host, switch)
 
-def simpleBrokerTest():
+def exampleBrokerTest():
 	#"Create and test a simple network"
 	topo = SingleSwitchTopo(n=4)
 	net = Mininet(topo)
@@ -27,6 +28,34 @@ def simpleBrokerTest():
 	dumpNodeConnections(net.hosts)
 	print("Testing network connectivity")
 	net.pingAll()
+	net.stop()
+
+def simpleTest():
+	topo = Topo()  # Create an empty topology
+	topo.addSwitch("s1")  # Add switches and hosts to the topology
+	topo.addHost("h1")
+	topo.addHost("h2")
+	topo.addLink("h1", "s1")  # Wire the switches and hosts together with links
+	topo.addLink("h2", "s1")
+	net = Mininet(topo)  # Create the Mininet, start it and try some stuff
+	net.start()
+	net.pingAll()
+	net.iperf()
+	net.stop()
+
+
+def simpleBrokerTest():
+	#"Create and test a simple network"
+	topo = SingleSwitchTopo(n=4)
+	net = Mininet(topo)
+	net.start()
+	print("Starting host connections")
+	dumpNodeConnections(net.hosts)
+	h1 = net.get('h1')
+	h1.sendCmd('python3 subscriber.py MSFT True')
+
+	CLI(net)
+
 	net.stop()
 
 def complexBrokerTest():
@@ -65,4 +94,5 @@ def complexFloodTest():
 if __name__=='__main__':
 	# Tell mininet to print useful information
 	setLogLevel('info')
+	#simpleBrokerTest()
 	simpleBrokerTest()

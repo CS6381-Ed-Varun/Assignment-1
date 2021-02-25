@@ -8,10 +8,10 @@ import time
 
 class publisher(Thread):
 
-	def __init__(self, id, ticker, flood):
+	def __init__(self, id, topic, flood):
 		super().__init__()
 		self.id = id
-		self.ticker = ticker
+		self.topic = topic
 		self.flood = flood
 		self.joined = True
 
@@ -27,16 +27,17 @@ class publisher(Thread):
 			#select a stock
 			stock_list = ["GOOG", "AAPL", "MSFT", "IBM", "AMD", "CLII", "EXO", "NFLX", "CME", "CKA"]
 			index = random.randrange(1,10)
-			ticker = stock_list[index]
+			#topic = stock_list[index]
 			#generate a random price
 			price = str(random.randrange(20, 60))
-			#send ticker + price to broker
+			#send topic + price to broker
 
 			#Capturing system time
-			seconds = (datetime.datetime.now() - datetime.datetime(1970, 1, 1)).total_seconds()
-			time = seconds
-			pub.send_string("%s %s %s" % (ticker, price, time))
-			#time.sleep(1)
+			#seconds = (datetime.datetime.now() - datetime.datetime(1970, 1, 1)).total_seconds()
+			#time = seconds
+			time_started = (datetime.datetime.now() - datetime.datetime(1970, 1, 1)).total_seconds()
+			pub.send_string("{topic} {price} {time_started}".format(topic=self.topic, price=price, time_started=time_started))
+			time.sleep(1)
 
 	def leave(self):
 		self.joined = False
@@ -44,13 +45,15 @@ class publisher(Thread):
 
 
 def main():
-	ticker = sys.argv[0]
-	method = sys.argv[1]
+	id = sys.argv[1]
+	topic = sys.argv[2]
+	method = sys.argv[3]
 
-	pub = publisher(ticker, method)
-	while True:
-		pub.run()
-		time.sleep(1)
+	pub = publisher(id, topic, method)
+	pub.start()
+	#while True:
+		#pub.start()
+		#time.sleep(1)
 
 if __name__=='__main__':
 	main()

@@ -32,5 +32,16 @@ class listener(Thread):
         while self.joined:
             string = sub.recv()
             messages.append(messages)
-            if (len(messages) % 100 == 0):
+            if (len(messages) % 10 == 0):
                 print(str(len(messages)) + " messages sent by brokers")
+
+def main():
+    method = sys.argv[1]
+
+    lis = listener(method)
+    lis.start()
+    #while True:
+        #lis.start()
+
+if __name__=='__main__':
+    main()

@@ -28,12 +28,14 @@ class subscriber(Thread):
 			sub.setsockopt_string(zmq.SUBSCRIBE, self.topic)
 		while self.joined:
 			string = sub.recv_string()
-			ticker, price, time = string.split()
+			topic, price, time_started = string.split()
 
+			#time_received = (datetime.datetime.now() - datetime.datetime(1970, 1, 1)).total_seconds()
+			#time_received = (datetime.datetime.now().strftime("%H:%M:%S.%f"))
 			time_received = (datetime.datetime.now() - datetime.datetime(1970, 1, 1)).total_seconds()
-			latency = time_received - float(time)
-			print(ticker, price, latency, 'ms')
-			with open("latency_{}.txt".format(ticker), "a") as f:
+			latency = format((1000*(float(time_received) - float(time_started))), '.5f')
+			print(topic, price, latency, 'ms')
+			with open("./results/latency_{}.csv".format(topic), "a") as f:
 				f.write(str(latency) + "\n")
 
 	def leave(self):
@@ -41,13 +43,20 @@ class subscriber(Thread):
 		print('sub ' + self.topic + ' leaving')
 
 def main():
-	ticker = sys.argv[0]
-	method = sys.argv[1]
+	topic = sys.argv[1]
+	method = sys.argv[2]
 
-	sub = subscriber(ticker, method)
-	while True:
-		sub.run()
-		time.sleep(1)
+	if not str(topic) or len(topic) != 4:
+		print("Invalid Stock Ticker")
+		sys.exit(-1)
+
+	#Should try to check whether method is boolean
+
+	sub = subscriber(topic, method)
+	sub.start()
+	#while True:
+		#sub.start()
+		#time.sleep(1)
 
 if __name__=='__main__':
 	main()

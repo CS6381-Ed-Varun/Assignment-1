@@ -34,6 +34,7 @@ def main():
 	l1 = middleware.listener(True)
 	l1.start()
 
+	time.sleep(5)
 	p3.leave()
 
 if __name__ == "__main__":
