@@ -57,3 +57,13 @@ mininet> h5 python3 subscriber.py AAPL TRUE &
 mininet> h6 python3 subscriber.py IBM TRUE &
 ```
 ``
+
+## Rubric
+| Category | Points | Explanation |
+|----------|--------|-------------|
+|Running the Code / Covering Requirements | /20 | This README covers the set-up and script to run the different test cases. A video example will also be sent, which covers all the cases running live.
+|Unit Tests | /15 | The live outputs provide validation for Subs recieving, Sub joining + leaving, broker + brokerless methods, total volume of throughput, multiple pubs + subs at once. Lastly, the graphs will cover the end to end measurements. 
+|Cooperation | /15 | We split the project evenly. Ed worked on the middleware and Varun worked on the hosting + data. Both of us contributed to the testing and planning.
+|Passing Cases | /30 | See the video for examples of each test case.
+|Graphs | /20 | The Repo contains box-plots offering insight into the latency across different complexities + dissemination approaches. The results generally align with what was discussed in live lecture.
+
