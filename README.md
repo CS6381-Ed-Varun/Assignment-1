@@ -48,13 +48,11 @@ Assign the various hosts as either publisher or subscriber.
 Subsequently, passing the parameters for the stock ticker and API method will generate the connections.
 The latencies will be exported to a csv and an analysis can be replicated with offline_analysis.py
 ```bash
-sudo mn --topo single,6
-mininet> h1 python3 publisher.py &
-mininet> h2 python3 publisher.py &
-mininet> h3 python3 broker.py MSFT TRUE &
-mininet> h4 python3 subscriber.py MSFT TRUE &
-mininet> h5 python3 subscriber.py AAPL TRUE &
-mininet> h6 python3 subscriber.py IBM TRUE &
+sudo mn --topo single,4
+mininet> h1 python3 ./middleware/broker.py &
+mininet> h2 python3 ./middleware/subscriber.py MSFT True &
+mininet> h3 python3 ./middleware/listener.py True &
+mininet> h4 python3 ./middleware/publisher.py 1 MSFT TRUE &
 ```
 ``
 
