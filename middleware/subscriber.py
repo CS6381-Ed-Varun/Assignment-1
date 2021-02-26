@@ -18,13 +18,18 @@ class subscriber(Thread):
 		print('starting sub ' + self.topic)
 		context = zmq.Context()
 		sub = context.socket(zmq.SUB)
-		if self.flood == True:
-			for i in range(1,8):
+		print('Flood variable is ' + self.flood)
+		if self.flood != True:
+			print('Flooding Approach Enabled for Subscriber')
+			for i in range(1, 8):
 				port = str(5558 + i)
 				# FIXME: Edit the binding to seek the appropriate IP 10.0.0.#
-				sub.connect("tcp://10.0.0." + i + ":" + port)
+				print("tcp://10.0.0.{ipid}:{portid}".format(ipid=i, portid=port))
+				sub.connect("tcp://10.0.0.{ipid}:{portid}".format(ipid=i, portid=port))
+				#sub.connect("tcp://10.0.0.{ipid}:{portid}".format(ipid=i, portid=port) + str(i) + ":" + port)
 				sub.setsockopt_string(zmq.SUBSCRIBE, self.topic)
 		else:
+			print('Broker Approach Enabled for Subscriber')
 			sub.connect("tcp://10.0.0.1:5559")
 			sub.setsockopt_string(zmq.SUBSCRIBE, self.topic)
 		while self.joined:

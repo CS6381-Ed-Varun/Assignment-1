@@ -10,7 +10,7 @@ class publisher(Thread):
 
 	def __init__(self, id, topic, flood):
 		super().__init__()
-		self.id = id
+		self.id = int(id)
 		self.topic = topic
 		self.flood = flood
 		self.joined = True
@@ -19,10 +19,22 @@ class publisher(Thread):
 		print('starting publisher number ' + str(self.id))
 		context = zmq.Context()
 		pub = context.socket(zmq.PUB)
-		if self.flood == True:
+		print('Flood variable is ' + self.flood)
+		if self.flood != True:
+			print('Flooding Approach Enabled for Publisher')
+
+			port = int(5558 + self.id + 4)
+
 			#FIXME: Edit the binding to seek the appropriate IP 10.0.0.#
-			pub.bind("tcp://10.0.0." + self.id + ":" + str(5558 + self.id))
+			#pub.bind("tcp://10.0.0." + str(self.id) + ":" + str(5558 + self.id))
+			print("tcp://10.0.0.{ipid}:{portid}".format(ipid=self.id, portid=port))
+			#pub.bind("tcp://10.0.0." + int(self.id) + ':' + port)
+
+			pub.bind("tcp://10.0.0.6:{portid}".format(portid=port))
+			#Working pub.bind("tcp://10.0.0.{ipid}:{portid}".format(ipid=self.id, portid=port))
+			#pub.bind("tcp://10.0.0.{ipid}:{portid}".format(ipid=self.id, portid=(port)))
 		else:
+			print('Broker Approach Enabled for Publisher')
 			pub.connect("tcp://10.0.0.1:5560")
 		while self.joined:
 			#select a stock

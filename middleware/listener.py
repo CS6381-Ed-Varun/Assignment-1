@@ -17,14 +17,17 @@ class listener(Thread):
         print("starting listener thread")
         context = zmq.Context()
         sub = context.socket(zmq.SUB)
+        print('Flood variable is ' + self.flood)
         # Flooding version - connect to all pub networks w/o a filter
-        if self.flood == True:
+        if self.flood != True:
+            print('Flooding Approach is being monitored')
             for i in range(1, 8):
                 port = str(5558 + i)
-                sub.connect("tcp://*:" + port)
+                sub.connect("tcp://10.0.0." + str(i) + ":" + port)
                 sub.setsockopt_string(zmq.SUBSCRIBE, "")
         # Broker version - connect w/o filtering
         else:
+            print('Broker Approach is being monitored')
             sub.connect("tcp://10.0.0.1:5559")
             sub.setsockopt_string(zmq.SUBSCRIBE, "")
         # make a list of messages and appended to it each time one arrives
