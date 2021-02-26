@@ -5,6 +5,7 @@ import random
 import time
 
 def main():
+    print('starting broker')
     context = zmq.Context()
 
     # pub side

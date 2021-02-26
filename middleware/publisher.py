@@ -23,7 +23,7 @@ class publisher(Thread):
 		if self.flood != True:
 			print('Flooding Approach Enabled for Publisher')
 
-			port = int(5558 + self.id + 4)
+			port = int(5558 + self.id)
 
 			#FIXME: Edit the binding to seek the appropriate IP 10.0.0.#
 			#pub.bind("tcp://10.0.0." + str(self.id) + ":" + str(5558 + self.id))
