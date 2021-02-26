@@ -21,10 +21,11 @@ class subscriber(Thread):
 		if self.flood == True:
 			for i in range(1,6):
 				port = str(5558 + i)
-				sub.connect("tcp://127.0.0.1:" + port)
+				# FIXME: Edit the binding to seek the appropriate IP 10.0.0.#
+				sub.connect("tcp://10.0.0." + i + ":" + port)
 				sub.setsockopt_string(zmq.SUBSCRIBE, self.topic)
 		else:
-			sub.connect("tcp://127.0.0.1:5559")
+			sub.connect("tcp://10.0.0.1:5559")
 			sub.setsockopt_string(zmq.SUBSCRIBE, self.topic)
 		while self.joined:
 			string = sub.recv_string()

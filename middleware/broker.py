@@ -9,11 +9,11 @@ def main():
 
     # pub side
     frontend = context.socket(zmq.XPUB)
-    frontend.bind("tcp://127.0.0.1:5559")
+    frontend.bind("tcp://10.0.0.1:5559")
 
     # sub side
     backend = context.socket(zmq.XSUB)
-    backend.bind("tcp://127.0.0.1:5560")
+    backend.bind("tcp://10.0.0.1:5560")
 
     zmq.device(zmq.FORWARDER, frontend, backend)
 

@@ -21,11 +21,11 @@ class listener(Thread):
         if self.flood == True:
             for i in range(1, 8):
                 port = str(5558 + i)
-                sub.connect("tcp://127.0.0.1:" + port)
+                sub.connect("tcp://*:" + port)
                 sub.setsockopt_string(zmq.SUBSCRIBE, "")
         # Broker version - connect w/o filtering
         else:
-            sub.connect("tcp://127.0.0.1:5559")
+            sub.connect("tcp://10.0.0.1:5559")
             sub.setsockopt_string(zmq.SUBSCRIBE, "")
         # make a list of messages and appended to it each time one arrives
         messages = []

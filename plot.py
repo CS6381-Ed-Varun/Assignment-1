@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from matplotlib.ticker import AutoMinorLocator
 import pandas as pd
 
 data = pd.read_csv('./results/latency_AAPL.csv', na_values='.')

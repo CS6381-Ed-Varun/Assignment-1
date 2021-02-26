@@ -51,6 +51,7 @@ def simpleBrokerTest():
 	net.start()
 	print("Starting host connections")
 	dumpNodeConnections(net.hosts)
+	#Set the IPs for each of the hosts
 	h1 = net.get('h1')
 	h1.sendCmd('python3 ./middleware/broker.py')
 
