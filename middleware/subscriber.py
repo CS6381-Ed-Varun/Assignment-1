@@ -19,7 +19,7 @@ class subscriber(Thread):
 		context = zmq.Context()
 		sub = context.socket(zmq.SUB)
 		if self.flood == True:
-			for i in range(1,6):
+			for i in range(1,8):
 				port = str(5558 + i)
 				# FIXME: Edit the binding to seek the appropriate IP 10.0.0.#
 				sub.connect("tcp://10.0.0." + i + ":" + port)

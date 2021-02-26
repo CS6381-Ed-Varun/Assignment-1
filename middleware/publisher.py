@@ -21,7 +21,7 @@ class publisher(Thread):
 		pub = context.socket(zmq.PUB)
 		if self.flood == True:
 			#FIXME: Edit the binding to seek the appropriate IP 10.0.0.#
-			pub.bind("tcp://10.0.0." + (1+self.id) +":" + str(5558 + self.id))
+			pub.bind("tcp://10.0.0." + self.id + ":" + str(5558 + self.id))
 		else:
 			pub.connect("tcp://10.0.0.1:5560")
 		while self.joined:
