@@ -52,7 +52,16 @@ def simpleBrokerTest():
 	print("Starting host connections")
 	dumpNodeConnections(net.hosts)
 	h1 = net.get('h1')
-	h1.sendCmd('python3 subscriber.py MSFT True')
+	h1.sendCmd('python3 ./middleware/broker.py')
+
+	h2 = net.get('h2')
+	h2.sendCmd('python3 ./middleware/subscriber.py MSFT True')
+
+	h3 = net.get('h3')
+	h3.sendCmd('python3 ./middleware/listener.py True')
+
+	h4 = net.get('h4')
+	h4.sendCmd('python3 ./middleware/publisher.py 1 MSFT True')
 
 	CLI(net)
 
