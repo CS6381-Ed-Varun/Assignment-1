@@ -17,10 +17,10 @@ class listener(Thread):
         print("starting listener thread")
         context = zmq.Context()
         sub = context.socket(zmq.SUB)
-        print('Flood variable is ' + self.flood)
+        #print('Flood variable is ' + self.flood)
         # Flooding version - connect to all pub networks w/o a filter
         if self.flood != True:
-            print('Flooding Approach is being monitored')
+            #print('Flooding Approach is being monitored')
             for i in range(1, 8):
                 port = str(5558 + i)
                 sub.connect("tcp://10.0.0." + str(i) + ":" + port)

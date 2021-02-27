@@ -53,9 +53,9 @@ The latencies will be exported to a csv and an analysis can be replicated with o
 sudo mn -c #For cleaning up the environment
 sudo mn --topo single,4 -x
 mininet> h1 python3 ./middleware/broker.py &
-mininet> h2 python3 ./middleware/subscriber.py MSFT True &
+mininet> h2 python3 ./middleware/subscriber.py AAPL True &
 mininet> h3 python3 ./middleware/listener.py True &
-mininet> h4 python3 ./middleware/publisher.py 1 MSFT TRUE &
+mininet> h4 python3 ./middleware/publisher.py 1 AAPL True &
 ```
 
 ### Complex Broker Approach
@@ -75,11 +75,11 @@ mininet> h8 python3 ./middleware/listener.py True &
 ### Simple Flood Approach
 ```bash
 sudo mn -c #For cleaning up the environment
-sudo mn --topo single,6 -x
-mininet> h1 python3 ./middleware/broker.py &
-mininet> h2 python3 ./middleware/subscriber.py MSFT False &
+sudo mn --topo single,4 -x
+mininet> h1
+mininet> h2 python3 ./middleware/subscriber.py AAPL False &
 mininet> h3 python3 ./middleware/listener.py False &
-mininet> h4 python3 ./middleware/publisher.py 4 MSFT False &
+mininet> h4 python3 ./middleware/publisher.py 4 AAPL False &
 ```
 
 ### Complex Flood Approach
