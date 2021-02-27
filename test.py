@@ -12,10 +12,10 @@ my_dict = {'AAPL': data_AAPL, 'MSFT': data_MSFT, 'NFLX': data_NFLX}
 fig, ax = plt.subplots()
 ax.boxplot(my_dict.values(), meanline=True, showmeans=True)
 ax.set_xticklabels(my_dict.keys())
-plt.title('Complex Broker Approach')
+plt.title('Complex Flood Approach')
 plt.xlabel('Subscriber Topic(s)')
 plt.ylabel('Time (ms)')
 plt.ylim((0, 4.0))
-plt.savefig('./results/complex_broker.png')
+plt.savefig('./results/complex_flooding.png')
 
 plt.show()

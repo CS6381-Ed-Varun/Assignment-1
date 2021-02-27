@@ -5,6 +5,8 @@ data = pd.read_csv('./results/latency_MSFT.csv', na_values='.')
 #data = pd.read_csv('./results/latency_AAPL.csv', na_values='.')
 #data = pd.read_csv('./results/latency_IBM.csv', na_values='.')
 
+print(data)
+
 # plt.figure(figsize=(4, 3))
 plt.boxplot(data)
 plt.xticks((1,), ('AAPL',))

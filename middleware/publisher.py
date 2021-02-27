@@ -30,7 +30,7 @@ class publisher(Thread):
 			print("tcp://10.0.0.{ipid}:{portid}".format(ipid=self.id, portid=port))
 			#pub.bind("tcp://10.0.0." + int(self.id) + ':' + port)
 
-			pub.bind("tcp://10.0.0.6:{portid}".format(portid=port))
+			pub.bind("tcp://10.0.0.{ipid}:{portid}".format(ipid=self.id, portid=port))
 			#Working pub.bind("tcp://10.0.0.{ipid}:{portid}".format(ipid=self.id, portid=port))
 			#pub.bind("tcp://10.0.0.{ipid}:{portid}".format(ipid=self.id, portid=(port)))
 		else:

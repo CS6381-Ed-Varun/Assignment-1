@@ -61,11 +61,15 @@ mininet> h4 python3 ./middleware/publisher.py 1 MSFT TRUE &
 ### Complex Broker Approach
 ```bash
 sudo mn -c #For cleaning up the environment
-sudo mn --topo single,4 -x
+sudo mn --topo single,8 -x
 mininet> h1 python3 ./middleware/broker.py &
-mininet> h2 python3 ./middleware/subscriber.py MSFT True &
-mininet> h3 python3 ./middleware/listener.py True &
-mininet> h4 python3 ./middleware/publisher.py 1 MSFT TRUE &
+mininet> h2 python3 ./middleware/subscriber.py AAPL True &
+mininet> h3 python3 ./middleware/subscriber.py MSFT True &
+mininet> h4 python3 ./middleware/subscriber.py NFLX True &
+mininet> h5 python3 ./middleware/publisher.py 5 AAPL True &
+mininet> h6 python3 ./middleware/publisher.py 6 MSFT True &
+mininet> h7 python3 ./middleware/publisher.py 7 NFLX True &
+mininet> h8 python3 ./middleware/listener.py True &
 ```
 
 ### Simple Flood Approach
@@ -75,24 +79,27 @@ sudo mn --topo single,6 -x
 mininet> h1 python3 ./middleware/broker.py &
 mininet> h2 python3 ./middleware/subscriber.py MSFT False &
 mininet> h3 python3 ./middleware/listener.py False &
-mininet> h4 python3 ./middleware/publisher.py 1 MSFT False &
+mininet> h4 python3 ./middleware/publisher.py 4 MSFT False &
 ```
 
 ### Complex Flood Approach
 ```bash
 sudo mn -c #For cleaning up the environment
-sudo mn --topo single,4 -x
-mininet> h1 python3 ./middleware/broker.py &
-mininet> h2 python3 ./middleware/subscriber.py MSFT True &
-mininet> h3 python3 ./middleware/listener.py True &
-mininet> h4 python3 ./middleware/publisher.py 1 MSFT TRUE &
+sudo mn --topo single,8 -x
+mininet> h1 python3 ./middleware/subscriber.py AAPL False &
+mininet> h2 python3 ./middleware/subscriber.py MSFT False &
+mininet> h3 python3 ./middleware/subscriber.py NFLX False &
+mininet> h4 python3 ./middleware/publisher.py 4 AAPL False &
+mininet> h5 python3 ./middleware/publisher.py 5 MSFT False &
+mininet> h6 python3 ./middleware/publisher.py 6 NFLX False &
+mininet> h7 python3 ./middleware/listener.py False &
 ```
 
 ## Rubric
 | Category | Points | Explanation |
 |----------|--------|-------------|
 |Running the Code / Covering Requirements | /20 | This README covers the set-up and script to run the different test cases. A video example will also be sent, which covers all the cases running live.
-|Unit Tests | /15 | The live outputs provide validation for Subs recieving, Sub joining + leaving, broker + brokerless methods, total volume of throughput, multiple pubs + subs at once. Lastly, the graphs will cover the end to end measurements. 
+|Unit Tests | /15 | The live outputs provide validation for Subs receiving, Sub joining + leaving, broker + brokerless methods, total volume of throughput, multiple pubs + subs at once. Lastly, the graphs will cover the end to end measurements. 
 |Cooperation | /15 | We split the project evenly. Ed worked on the middleware and Varun worked on the hosting + data. Both of us contributed to the testing and planning.
 |Passing Cases | /30 | See the video for examples of each test case.
 |Graphs | /20 | The Repo contains box-plots offering insight into the latency across different complexities + dissemination approaches. The results generally align with what was discussed in live lecture.
